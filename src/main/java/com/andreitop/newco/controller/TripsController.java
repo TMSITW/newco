@@ -18,9 +18,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping(ApiConstant.API_V_1 + "/trips")
-public class TripsController {
+public class TripsController<T extends TripDto> implements Controller<T>{
 
-    private final TripService tripService;
+    private final TripService<T> tripService;
 
     @Autowired
     public TripsController(TripService tripService) {
@@ -29,19 +29,19 @@ public class TripsController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<TripDto> findAll() {
+    public List<T> findAll() {
         return tripService.findAll();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TripDto findById(@PathVariable("id") final Long id) {
+    public T findById(@PathVariable("id") final Long id) {
         return tripService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody final TripDto trip) {
+    public void create(@RequestBody final T trip) {
         tripService.save(trip);
     }
 
@@ -53,7 +53,7 @@ public class TripsController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void update(@RequestBody final TripDto newTrip) {
+    public void update(@RequestBody final T newTrip) {
         tripService.update(newTrip);
     }
 

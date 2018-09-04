@@ -15,8 +15,10 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,7 +47,6 @@ public class TripsControllerTest {
 
     @Test
     public void givenTrips_whenGetTrips_thenReturnJsonArray() throws Exception {
-
         TripDto tripDto = new TripDto();
         tripDto.setId(1L);
         tripDto.setOrigin("MOW");
@@ -63,5 +64,39 @@ public class TripsControllerTest {
                 .andExpect(jsonPath("$[0].origin", is("MOW")))
                 .andExpect(jsonPath("$[0].destination", is("LED")))
                 .andExpect(jsonPath("$[0].price", is(4232)));
+    }
+
+    @Test
+    public void givenId_whenGetTrip_thenReturnTripInJson() throws Exception{
+        TripDto tripDto = new TripDto();
+        tripDto.setId(1L);
+        tripDto.setOrigin("MOW");
+        tripDto.setDestination("LED");
+        tripDto.setPrice(4232);
+
+        List<TripDto> allTrips = Collections.singletonList(tripDto);
+        given(tripService.findById(1L)).willReturn(allTrips.get(0));
+
+        mockMvc.perform(get(API_URL+"/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(CONTENT_TYPE))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.origin", is("MOW")))
+                .andExpect(jsonPath("$.destination", is("LED")))
+                .andExpect(jsonPath("$.price", is(4232)));
+    }
+
+    @Test
+    public void givenDeleteTrip_thenStatusIsNoContent() throws Exception{
+        mockMvc.perform(delete(API_URL+"/1"))
+        .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void givenTrip_whenUpdateTrip_thenStatusOk() throws Exception{
+        mockMvc.perform(put(API_URL)
+                .contentType(CONTENT_TYPE)
+                .content(TRIP_JSON))
+                .andExpect(status().isOk());
     }
 }
