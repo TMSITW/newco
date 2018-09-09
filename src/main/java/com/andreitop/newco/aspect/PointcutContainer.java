@@ -8,12 +8,12 @@ public class PointcutContainer {
     public void repositoryFind() {
     }
 
-    @Pointcut("within(com.andreitop.newco.controller.*)")
-    public void controllerFind(){
+    @Pointcut("within(com.andreitop.newco.repository.*Repository.save*)")
+    public void repositorySave(){
     }
 
-    @Pointcut("execution( * com.andreitop.newco.controller.*Controller.find*())")
-    public void controllerFindAll(){
+    @Pointcut("execution( * com.andreitop.newco.repository.*Repository.update*()))")
+    public void repositoryUpdate(){
     }
 
 
