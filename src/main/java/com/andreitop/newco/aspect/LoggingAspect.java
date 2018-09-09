@@ -25,14 +25,14 @@ public class LoggingAspect {
         logger.info(" ---> Method " + className + "." + methodName + " is about to be called");
     }
 
-    @After("com.andreitop.newco.aspect.PointcutContainer.repositoryFind()")
+    @After("com.andreitop.newco.aspect.PointcutContainer.controllerFind()")
     public void afterRepoFind(JoinPoint joinPoint){
         String className = joinPoint.getSignature().getDeclaringTypeName();
         String methodName = joinPoint.getSignature().getName();
         logger.info(" ---> Method " + className + "." + methodName + " is finished");
     }
 
-    @Around("com.andreitop.newco.aspect.PointcutContainer.repositoryFind()")
+    @Around("com.andreitop.newco.aspect.PointcutContainer.controllerFindAll()")
     public long timeCount(ProceedingJoinPoint joinPoint) throws Throwable {
         long begin=System.currentTimeMillis();
 

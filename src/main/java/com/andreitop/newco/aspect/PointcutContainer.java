@@ -12,11 +12,9 @@ public class PointcutContainer {
     public void controllerFind(){
     }
 
-    @Pointcut("this(com.andreitop.newco.repository..TripRepository)")
-    public void thisFind(){
-    }
-
     @Pointcut("execution( * com.andreitop.newco.controller.*Controller.find*())")
     public void controllerFindAll(){
     }
+
+
 }
