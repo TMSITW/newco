@@ -32,8 +32,7 @@ public class AspectTest {
         tripRepository.save(tripDto);
         tripRepository.findAll();
         tripDto.setPrice(666);
-        tripRepository.update(tripDto);
-
+        tripRepository.saveAndFlush(tripDto);
     }
 
 

@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    database: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    datasource:
+      platform: h2
+      url: jdbc:h2:tcp://:9092/~/tripsss
+      username: username
+      password: password
+      driverClassName: org.h2.Driver
